@@ -1,0 +1,60 @@
+@if (card) {
+  <div class="details-container">
+    <button (click)="goBack()" class="back-btn">&larr; Vissza a találatokhoz</button>
+
+    <div class="content-split">
+      <div class="image-box">
+        @if (card.image_uris?.normal) {
+          <img [src]="card.image_uris?.normal" [alt]="card.name" />
+        }
+        @else if (card.card_faces) {
+          @for (face of card.card_faces; track $index) {
+            @if (face.image_uris?.normal) {
+              <img [src]="face.image_uris?.normal"
+                   [alt]="face.name"
+                   class="clickable-face"
+                   [class.selected]="selectedFaceIndex === $index"
+                   tabindex="0"
+                   (click)="selectFace($index)"
+                   (keyup.enter)="selectFace($index)"
+                   (keyup.space)="selectFace($index)" />
+            }
+          }
+        }
+      </div>
+
+      <div class="info-box">
+
+        @if (card.card_faces && card.card_faces.length > 0) {
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h1 style="margin: 0;">{{ card.card_faces[selectedFaceIndex].name }}</h1>
+            <span [innerHTML]="card.card_faces[selectedFaceIndex].mana_cost | mana"></span>
+          </div>
+          <h3 class="type" style="margin-top: 0;">{{ card.card_faces[selectedFaceIndex].type_line }}</h3>
+
+          <div class="oracle-text">
+            <p [innerHTML]="card.card_faces[selectedFaceIndex].oracle_text | mana"></p>
+          </div>
+        } @else {
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h1 style="margin: 0;">{{ card.name }}</h1>
+            <span [innerHTML]="card.mana_cost | mana"></span>
+          </div>
+          <h3 class="type" style="margin-top: 0;">{{ card.type_line }}</h3>
+
+          <div class="oracle-text">
+            <p [innerHTML]="card.oracle_text | mana"></p>
+          </div>
+        }
+
+        <div class="price-tag">
+          <span class="price-label">Piaci ár (Európa):</span>
+          <span class="price-value">{{ card.prices?.eur ? card.prices?.eur + ' €' : 'Nincs adat' }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="loading">Kártya betöltése...</div>
+}

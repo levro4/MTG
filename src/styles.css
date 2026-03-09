@@ -1,0 +1,11 @@
+/* Globális beállítások az egész appra */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}/* You can add global styles to this file, and also import other style files */

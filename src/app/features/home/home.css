@@ -1,0 +1,39 @@
+/* --- Hero / Landing rész --- */
+.hero {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #f4f6f8; /* Világosszürke háttér */
+  padding: 2rem;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin-bottom: 2.5rem;
+}
+
+.cta-button {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #dd0031; /* Angular piros gomb */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+  background-color: #c2002b;
+  transform: translateY(-2px); /* Pici emelkedés ha fölé viszed az egeret */
+}

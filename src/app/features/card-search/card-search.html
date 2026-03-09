@@ -1,0 +1,60 @@
+<div class="search-container">
+  <h2>Keress egy Magic kártyára!</h2>
+
+  <div class="advanced-search-box">
+
+    <input
+      type="text"
+      [(ngModel)]="searchName"
+      (keyup.enter)="search()"
+      placeholder="Kártya neve..."
+      class="search-input"
+    />
+
+    <div class="color-buttons">
+      @for (color of manaColors; track color.value) {
+        <button
+          class="color-btn"
+          [class.active]="searchColor === color.value"
+          (click)="setColor(color.value)">
+          @if (color.symbol) {
+            <span [innerHTML]="color.symbol | mana"></span>
+          } @else {
+            <span>{{ color.label }}</span>
+          }
+        </button>
+      }
+    </div>
+
+    <input
+      type="number"
+      [(ngModel)]="searchMana"
+      (keyup.enter)="search()"
+      placeholder="Mana érték (pl. 3)"
+      class="search-input mana-input"
+      min="0"
+    />
+
+    <button (click)="search()" class="search-btn">Keresés</button>
+  </div>
+
+  <div class="results-grid">
+    @for (card of cards; track card.id) {
+      <a class="card" [routerLink]="['/card', card.id]" style="cursor: pointer;">
+        @if (card.image_uris?.normal) {
+          <img [src]="card.image_uris?.normal" [alt]="card.name" />
+        }
+        @else if (card.card_faces && card.card_faces[0]?.image_uris?.normal) {
+          <img [src]="card.card_faces[0]?.image_uris?.normal" [alt]="card.name" />
+        }
+        @else {
+          <div class="no-image">Nincs kép</div>
+        }
+        <h3>{{ card.name }}</h3>
+        <p>{{ card.type_line }}</p>
+      </a>
+    } @empty {
+      <p class="empty-message">Írj be egy kártyanevet, és kattints a keresésre!</p>
+    }
+  </div>
+</div>
