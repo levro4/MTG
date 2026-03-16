@@ -1,11 +1,30 @@
-/* Globális beállítások az egész appra */
+/* CSS Változók: Ha később színt akarunk cserélni, csak itt kell átírni! */
+:root {
+  --primary-color: #2c3e50;
+  --accent-color: #e74c3c;
+  --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --text-main: #333333;
+  --text-muted: #666666;
+}
+
+/* Alapvető oldal-beállítások */
 body, html {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  box-sizing: border-box;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif; /* A modern betűtípus mindenre */
+  background: var(--bg-gradient);
+  background-attachment: fixed; /* Hogy görgetésnél ne csússzon el a háttér */
+  color: var(--text-main);
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}/* You can add global styles to this file, and also import other style files */
+/* A címsorok megkapják a Magic-es betűtípust */
+h1, h2, h3, .logo {
+  font-family: 'Cinzel', serif;
+  color: var(--primary-color);
+}
+
+/* Globális gomb stílus (hogy mindenhol egységes legyen) */
+button {
+  font-family: 'Montserrat', sans-serif;
+}
