@@ -1,37 +1,105 @@
-/* --- Navigációs sáv --- */
+:root {
+  --navbar-bg: #2c3e50; /* A stabil, elegáns sötétkék-szürke háttér */
+  --text-light: #e2e8f0; /* Világosszürke betűk, amik "világítanak" a sötéten */
+  --accent-color: #e74c3c; /* Piros szín a regisztrációnak */
+  --gold-color: #f1c40f; /* Arany szín a logónak és az aláhúzásnak */
+}
+
 .navbar {
-  background-color: var(--primary-color);
-  color: white;
+  /* Itt behívjuk a globális átmenetet, amit a styles.css-ben csináltunk */
+  background: var(--bg-gradient);
+  /* Ez a titok! Lerögzíti a hátteret, így pixelre pontosan illeszkedik az oldal hátteréhez */
+  background-attachment: fixed;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 3rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  /* Hagyunk egy nagyon finom árnyékot, hogy a tartalom fölött lebegjen */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.nav-links {
-  list-style: none;
+.nav-left, .nav-right {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
-  margin: 0;
-  padding: 0;
 }
 
-.nav-links a {
-  color: #ecf0f1;
+/* MTG App Logó stílus */
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--gold-color); /* Alapból marad a szép arany */
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
+  margin-right: 1.5rem;
+  transition: color 0.3s, transform 0.3s;
 }
 
-.nav-links a:hover {
-  color: #dd0031; /* Angular piros hover effekt */
+/* Hover-re most már ez is PIROS lesz! */
+.logo:hover {
+  color: var(--accent-color); /* <-- Ezt a sort javítottuk! */
+  transform: scale(1.05);
+}
+
+/* Alap menüpont stílus */
+/* Alap menüpont stílus */
+.nav-link {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-light); /* Világosszürke alapállapotban */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  position: relative; /* FIGYELEM: Ez a sor KÖTELEZŐ, enélkül elcsúszik vagy eltűnik az aláhúzás! */
+  transition: color 0.3s;
+}
+
+/* Amikor ráviszed az egeret, PIROS lesz a betű */
+.nav-link:hover {
+  color: var(--accent-color);
+}
+
+/* Az animált PIROS aláhúzás beállítása */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0; /* Alapból 0 a szélessége (nem látszik) */
+  height: 2px;
+  bottom: -4px; /* Pontosan a szöveg alá kerül */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--accent-color); /* Piros színű vonal */
+  transition: width 0.3s ease; /* Ez csinálja az animációt */
+}
+
+/* Amikor ráviszed az egeret, a vonal 100% széles lesz */
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.login-link::after {
+  bottom: -4px;
+}
+
+/* Kiemelt Regisztráció gomb */
+.btn-register {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+}
+
+.btn-register:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
