@@ -1,0 +1,243 @@
+/* FŐ KONTÉNER */
+.deck-builder-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* 1. FEJLÉC: Név és Mentés gomb */
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+}
+
+.deck-name-input {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  border: none;
+  border-bottom: 2px solid #e2e8f0;
+  color: #2c3e50;
+  outline: none;
+  width: 50%;
+  padding: 0.5rem;
+}
+
+.deck-name-input:focus {
+  border-bottom-color: #e74c3c;
+}
+
+.save-btn {
+  background-color: #e74c3c; /* A pirosod */
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+}
+
+.save-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* 2. KÖZÉPSŐ RÉSZ: Gyorskereső és görgető */
+.quick-search-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.search-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.search-controls input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.color-filters {
+  display: flex;
+  gap: 0.6rem;
+  background: #f1f5f9; /* Egy kis sötétebb háttér a gomboknak */
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px; /* Pirula alak */
+}
+
+.color-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.color-btn img {
+  width: 100%;
+  height: 100%;
+  /* Alapból szürke és picit átlátszó, ha nincs kiválasztva */
+  filter: grayscale(100%);
+  opacity: 0.4;
+  transition: all 0.2s ease;
+}
+
+/* Amikor a gomb aktív (kiválasztott) */
+.color-btn.active img {
+  opacity: 1;
+  transform: scale(1.2); /* Picit megnő a kiválasztott ikon */
+  filter: drop-shadow(0 0 5px rgba(0,0,0,0.2));
+}
+
+.color-btn:hover img {
+  opacity: 0.8;
+  filter: grayscale(50%);
+}
+
+.main-search-btn {
+  padding: 0.8rem 1.2rem;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Vízszintes görgető sáv */
+.scroll-wrapper {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+  scroll-behavior: smooth;
+}
+
+.scroll-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+
+.mini-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 130px;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.mini-card:hover { transform: scale(1.05); }
+.mini-card img { width: 100%; display: block; }
+
+.card-hover-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(231, 76, 60, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+  color: white;
+  font-size: 2rem;
+}
+
+.mini-card:hover .card-hover-overlay { opacity: 1; }
+
+/* 3. ALSÓ RÉSZ: Lista és Tippek */
+.deck-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.deck-list-side, .info-side {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.deck-list-side h3, .info-side h3 {
+  font-family: 'Playfair Display', serif;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.deck-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.deck-table th {
+  text-align: left;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 1rem;
+  color: #64748b;
+}
+
+.deck-table td {
+  padding: 1rem 0;
+  border-bottom: 1px solid #f1f5f9;
+  color: #2c3e50;
+}
+
+.actions button {
+  padding: 0.3rem 0.8rem;
+  margin-right: 0.4rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+.actions button:hover { background: #e2e8f0; }
+
+.info-side ul {
+  padding-left: 1.2rem;
+  color: #475569;
+}
+
+.info-side li {
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+.mana-symbols-row {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.mana-icon-small {
+  width: 20px;
+  height: 20px;
+  /* Egy kis árnyék, hogy térben jobban kijöjjenek a fehér alapon */
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
+}

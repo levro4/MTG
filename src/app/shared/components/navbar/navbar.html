@@ -1,7 +1,12 @@
 <nav class="navbar">
-  <div class="logo">MTG App</div>
-  <ul class="nav-links">
-    <li><a routerLink="/">Kezdőlap</a></li>
-    <li><a routerLink="/search">Kártyakereső</a></li>
-  </ul>
+  <div class="nav-left">
+    <a routerLink="/" class="logo">MTG App</a>
+    <a routerLink="/" class="nav-link">Kezdőlap</a>
+    <a routerLink="/search" class="nav-link">Kártyakereső</a>
+  </div>
+
+  <div class="nav-right">
+    <a routerLink="/login" class="nav-link login-link">Bejelentkezés</a>
+    <a routerLink="/register" class="btn-register">Regisztráció</a>
+  </div>
 </nav>

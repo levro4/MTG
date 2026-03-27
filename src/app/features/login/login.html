@@ -1,0 +1,23 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Bejelentkezés</h2>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">E-mail cím</label>
+        <input type="email" id="email" name="email" [(ngModel)]="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Jelszó</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required>
+      </div>
+
+      <button type="submit" class="auth-btn">Belépés</button>
+    </form>
+
+    <p class="switch-page">
+      Nincs még fiókod? <a routerLink="/register">Regisztrálj itt!</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="deck-builder-container">
+
+  <div class="deck-header">
+    <input type="text" [(ngModel)]="deckName" class="deck-name-input" placeholder="Pakli neve...">
+    <div class="deck-stats">
+      <span>Összesen: <strong>{{ totalCards }}</strong> / 60 kártya</span>
+      <button class="save-btn" (click)="saveDeck()">Pakli Mentése</button>
+    </div>
+  </div>
+
+  <div class="quick-search-section">
+    <div class="search-controls">
+      <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="searchCards()" placeholder="Keress kártyát a paklidhoz...">
+      <div class="color-filters">
+        @for (color of ['W', 'U', 'B', 'R', 'G', 'C']; track color) {
+          <button
+            (click)="toggleColor(color)"
+            [class.active]="selectedColors.includes(color)"
+            class="color-btn"
+            [title]="color">
+            <img [src]="'https://svgs.scryfall.io/card-symbols/' + color + '.svg'" [alt]="color">
+          </button>
+        }
+      </div>
+      <button (click)="searchCards()" class="main-search-btn">Keresés</button>
+    </div>
+
+    <div class="horizontal-results">
+      @if (isSearching) {
+        <div class="loader">Kártyák keresése...</div>
+      } @else if (searchResults.length > 0) {
+        <div class="scroll-wrapper">
+          @for (card of searchResults; track card.id) {
+            <div class="mini-card" (click)="addToDeckFromSearch(card)">
+              <img [src]="card.image_uris?.small || card.card_faces?.[0]?.image_uris?.small" [alt]="card.name">
+              <div class="card-hover-overlay"><span>+</span></div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="empty-msg">Kezdj el gépelni a kereséshez!</p>
+      }
+    </div>
+  </div>
+
+  <div class="deck-content">
+    <div class="deck-list-side">
+      <h3>Pakli tartalma</h3>
+      @if (deckCards.length === 0) {
+        <div class="empty-state">
+          <p>Még nincs kártya a paklidban. Használd a fenti keresőt!</p>
+        </div>
+      } @else {
+        <table class="deck-table">
+          <thead>
+          <tr>
+            <th>Név</th>
+            <th>Mana</th>
+            <th>Darab</th>
+            <th>Műveletek</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (card of deckCards; track card.id; let i = $index) {
+              <tr>
+                <td>{{ card.name }}</td>
+                <td>
+                  <div class="mana-symbols-row">
+                    @for (symbol of parseMana(card.mana_cost); track $index) {
+                      <img
+                        [src]="'https://svgs.scryfall.io/card-symbols/' + symbol + '.svg'"
+                        class="mana-icon-small"
+                        [alt]="symbol">
+                    }
+                  </div>
+                </td>
+                <td><strong>{{ card.count }}x</strong></td>
+                <td class="actions">
+                  <button (click)="addCard(card)">+</button>
+                  <button (click)="removeCard(i)">-</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+
+    <div class="info-side">
+      <h3>Hogyan építs paklit?</h3>
+      <ul>
+        <li>Egy pakli minimum <strong>60 kártyából</strong> álljon.</li>
+        <li>Ugyanabból a lapból maximum <strong>4 darab</strong> lehet (kivéve alap földek).</li>
+        <li>Törekedj a jó "Mana Curve"-re.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>

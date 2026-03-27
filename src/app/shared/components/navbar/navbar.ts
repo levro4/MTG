@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router'; // <-- Ezt az 1 sort kell hozzáadni felül
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',

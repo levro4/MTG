@@ -15,6 +15,7 @@ export class ScryfallService {
   public lastSearchColor: string = '';
   public lastSearchMana: string = '';
   public lastSearchResults: MagicCard[] = [];
+  public homeRandomCards: any[] = [];
 
   // Keresés kártyanév alapján (pl. "Black Lotus")
   searchCards(query: string): Observable<MagicCard[]> {

@@ -1,39 +1,144 @@
-/* --- Hero / Landing rész --- */
-.hero {
-  height: 80vh;
+.hero-section {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: #f4f6f8; /* Világosszürke háttér */
-  padding: 2rem;
+  padding: 4rem 2rem;
+  min-height: calc(100vh - 80px); /* Képernyő kitöltése a menü alatt */
+  overflow: hidden; /* Hogy a kilógó effektek ne csináljanak görgetősávot */
 }
 
-.hero-content h1 {
-  font-size: 3rem;
-  color: #2c3e50;
+.hero-title {
+  font-size: 3.5rem;
+  color: var(--primary-color);
   margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-.hero-content p {
-  font-size: 1.2rem;
-  color: #7f8c8d;
-  margin-bottom: 2.5rem;
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
+/* Nagy Call-To-Action (Kattints ide) gomb */
 .cta-button {
-  padding: 1rem 2.5rem;
-  font-size: 1.1rem;
-  font-weight: bold;
+  background-color: var(--accent-color);
   color: white;
-  background-color: #dd0031; /* Angular piros gomb */
-  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 1rem 2.5rem;
   border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-bottom: 4rem;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
 }
 
 .cta-button:hover {
-  background-color: #c2002b;
-  transform: translateY(-2px); /* Pici emelkedés ha fölé viszed az egeret */
+  background-color: #c0392b;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
+}
+
+.loading {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  margin-top: 50px;
+}
+
+/* --- A KÁRTYA LEGYEZŐ EFFEKTUS --- */
+.card-fan-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+}
+
+.fan-card {
+  position: absolute;
+  width: 220px; /* Magic kártya arányok */
+  border-radius: 4.75% / 3.5%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+}
+
+/* Az 5 kártya pontos elhelyezése térben és elforgatva */
+.card-0 { transform: translateX(-220px) translateY(50px) rotate(-12deg); z-index: 1; }
+.card-1 { transform: translateX(-110px) translateY(20px) rotate(-6deg); z-index: 2; }
+.card-2 { transform: translateX(0) translateY(0) rotate(0deg); z-index: 3; }
+.card-3 { transform: translateX(110px) translateY(20px) rotate(6deg); z-index: 2; }
+.card-4 { transform: translateX(220px) translateY(50px) rotate(12deg); z-index: 1; }
+
+/* Ha ráviszed az egeret egy kártyára, az felemelkedik és legelőre ugrik! */
+.fan-card:hover {
+  z-index: 10 !important;
+}
+
+.card-0:hover { transform: translateX(-220px) translateY(10px) rotate(-12deg) scale(1.1); }
+.card-1:hover { transform: translateX(-110px) translateY(-10px) rotate(-6deg) scale(1.1); }
+.card-2:hover { transform: translateX(0) translateY(-30px) rotate(0deg) scale(1.1); }
+.card-3:hover { transform: translateX(110px) translateY(-10px) rotate(6deg) scale(1.1); }
+.card-4:hover { transform: translateX(220px) translateY(10px) rotate(12deg) scale(1.1); }
+
+/* --- PAKLIÉPÍTŐ MOTIVÁCIÓS SZEKCIÓ --- */
+.deck-promo-section {
+  background-color: transparent; /* Ezzel felveszi a főoldal eredeti hátterét! */
+  padding: 5rem 2rem;
+  text-align: center;
+  /* Levettük a fehér hátteret és az árnyékot, hogy tökéletesen egybeolvadjon */
+}
+
+.promo-content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Pontosan ugyanaz a stílus, mint a fenti "Fedezd fel a Magic világát!" címnél */
+.promo-content h2 {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  font-weight: bold;
+}
+
+/* Pontosan ugyanaz a stílus, mint a fenti alcímnél */
+.promo-content p {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* A gomb pontosan olyan lesz, mint a fenti "Kártyakereső indítása" gomb */
+.promo-btn {
+  background-color: var(--accent-color);
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+.promo-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
 }

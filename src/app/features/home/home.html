@@ -1,7 +1,39 @@
-<header class="hero">
-  <div class="hero-content">
-    <h1>Üdvözöllek az új Angular alkalmazásodban!</h1>
-    <p>Ez egy egyszerű, letisztult kezdőképernyő. Építs belőle valami lenyűgözőt.</p>
-    <button class="cta-button">Kezdjünk neki</button>
+<div class="hero-section">
+
+  <h1 class="hero-title">Fedezd fel a Magic világát!</h1>
+  <p class="hero-subtitle">
+    Inspirálódj a legritkább lapokból, építsd meg a tökéletes paklit, és készülj a következő csatára. A varázslat itt kezdődik!
+  </p>
+
+  <a routerLink="/search" class="cta-button">Kártyakereső indítása</a>
+
+  <div class="card-fan-container">
+    @if (isLoading) {
+      <div class="loading">Kártyák megidézése folyamatban...</div>
+    } @else {
+      @for (card of randomCards; track card.id; let i = $index) {
+        <img
+          [src]="getImage(card)"
+          [alt]="card.name"
+          class="fan-card"
+          [class]="'card-' + i"
+          [routerLink]="['/card', card.id]" /> }
+    }
   </div>
-</header>
+
+</div>
+<div class="deck-promo-section">
+  <div class="promo-content">
+    <h2>Építsd meg a saját paklidat!</h2>
+    <p>
+      Mentsd el a kedvenc kártyáidat, állíts össze verhetetlen kombinációkat,
+      és oszd meg a stratégiádat másokkal. A te paklid, a te szabályaid!
+    </p>
+
+    @if (isLoggedIn) {
+      <a routerLink="/deck-builder" class="promo-btn">Irány a Pakliépítő</a>
+    } @else {
+      <a routerLink="/register" class="promo-btn">Regisztrálj és vágj bele!</a>
+    }
+  </div>
+</div>
