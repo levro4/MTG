@@ -112,6 +112,12 @@
   filter: drop-shadow(0 0 5px rgba(0,0,0,0.2));
 }
 
+.deck-stats {
+  display: flex;
+  align-items: center;
+  /* Ez adja meg a távolságot a szöveg és a gomb között */
+  gap: 2rem;
+}
 .color-btn:hover img {
   opacity: 0.8;
   filter: grayscale(50%);
