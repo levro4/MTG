@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Component, ChangeDetectorRef, HostListener } from '@angular/core';
 
 interface DeckCard {
   id: string;
@@ -29,15 +29,47 @@ export class DeckBuilder {
   searchResults: any[] = [];
   isSearching = false;
 
-  // Ez a függvény szedi szét a {W}{2} formátumot egy listává, amit az HTML megért
+  // Tooltip változók a kép megjelenítéséhez
+  hoveredCardImage: string | null = null;
+  tooltipX = 0;
+  tooltipY = 0;
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  // Egér mozgásának követése a kép megjelenítéséhez
+  @HostListener('document:mousemove', ['$event'])
+  handleMouseMove(event: MouseEvent) {
+    if (!this.hoveredCardImage) return;
+
+    const offset = 20;
+    let posX = event.clientX + offset;
+    let posY = event.clientY + offset;
+
+    // Edge detection: Ne lógjon ki a kép a képernyő szélén
+    if (posX + 250 > window.innerWidth) {
+      posX = event.clientX - 270;
+    }
+    if (posY + 350 > window.innerHeight) {
+      posY = event.clientY - 370;
+    }
+
+    this.tooltipX = posX;
+    this.tooltipY = posY;
+  }
+
+  onMouseEnterCard(image: string) {
+    this.hoveredCardImage = image;
+  }
+
+  onMouseLeaveCard() {
+    this.hoveredCardImage = null;
+  }
+
+  // Mana szimbólumok szétszedése képekké
   parseMana(manaCost: string): string[] {
     if (!manaCost) return [];
-
-    // Regex-szel kikeressük a kapcsos zárójelek közötti részeket
     const matches = manaCost.match(/\{([^}]+)\}/g);
     if (!matches) return [];
-
-    // Eltávolítjuk a zárójeleket és a slash-t (pl. {G/W} -> GW), mert az API így kéri az SVG-t
     return matches.map(symbol =>
       symbol.replace('{', '').replace('}', '').replace('/', '')
     );
@@ -47,7 +79,6 @@ export class DeckBuilder {
     return this.deckCards.reduce((sum, card) => sum + card.count, 0);
   }
 
-  // Színválasztó logika
   toggleColor(color: string) {
     const index = this.selectedColors.indexOf(color);
     if (index > -1) {
@@ -60,13 +91,11 @@ export class DeckBuilder {
 
   async searchCards() {
     if (!this.searchQuery.trim() && this.selectedColors.length === 0) return;
-
     this.isSearching = true;
     let fullQuery = this.searchQuery;
     if (this.selectedColors.length > 0) {
       fullQuery += ` c:${this.selectedColors.join('')}`;
     }
-
     try {
       const response = await fetch(`https://api.scryfall.com/cards/search?q=${encodeURIComponent(fullQuery)}`);
       const data = await response.json();
@@ -75,29 +104,36 @@ export class DeckBuilder {
       console.error('Hiba:', error);
     } finally {
       this.isSearching = false;
+      this.cdr.detectChanges();
     }
   }
 
-  // Itt volt a hiba a képen! Megfelelően átadjuk a 'card' paramétert
   addToDeckFromSearch(card: any) {
     const existingCard = this.deckCards.find(c => c.id === card.id);
     if (existingCard) {
       this.addCard(existingCard);
     } else {
+      // JAVÍTÁS: Ha nincs mana_cost a fő objektumban, vesszük az első oldalét (card_faces)
+      const mana = card.mana_cost || (card.card_faces ? card.card_faces[0].mana_cost : '');
+      const img = card.image_uris?.normal || (card.card_faces ? card.card_faces[0].image_uris?.normal : '');
+      const type = card.type_line || (card.card_faces ? card.card_faces[0].type_line : '');
+
       this.deckCards.push({
         id: card.id,
         name: card.name,
-        image: card.image_uris?.normal || card.card_faces?.[0]?.image_uris?.normal,
-        mana_cost: card.mana_cost || '',
-        type: card.type_line, // Így már látni fogja, mert a card a függvény paramétere
+        image: img,
+        mana_cost: mana,
+        type: type,
         count: 1
       });
     }
+    this.cdr.detectChanges();
   }
 
   addCard(card: DeckCard) {
     if (card.count < 4 || card.type.includes('Basic Land')) {
       card.count++;
+      this.cdr.detectChanges();
     }
   }
 
@@ -107,10 +143,10 @@ export class DeckBuilder {
     } else {
       this.deckCards.splice(index, 1);
     }
+    this.cdr.detectChanges();
   }
 
   saveDeck() {
     alert('A mentéshez be kell kötnünk a Firebase-t!');
   }
 }
-

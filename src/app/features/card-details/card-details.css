@@ -1,7 +1,9 @@
+/* --- ALAP STÍLUSOK (Asztali nézet) --- */
 .details-container {
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 2rem auto;
   padding: 0 2rem;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .back-btn {
@@ -13,11 +15,12 @@
   cursor: pointer;
   margin-bottom: 2rem;
   padding: 0;
+  transition: color 0.3s;
 }
 
 .back-btn:hover {
-  color: #dd0031;
-  text-decoration: underline;
+  color: #e74c3c;
+  text-decoration: none;
 }
 
 .content-split {
@@ -28,21 +31,19 @@
 
 .image-box {
   display: flex;
-  flex-direction: row; /* <-- Vízszintes elrendezés (egymás mellett) */
-  gap: 1rem; /* Kisebb távolság a két kártyakép között */
-  flex-shrink: 0; /* Megakadályozza, hogy a szöveg összenyomja a képeket */
-  margin-bottom: 2rem; /* Ha mobilra váltunk és egymás alá kerülnek, kell ez a margó */
+  flex-direction: row;
+  gap: 1rem;
+  flex-shrink: 0;
 }
 
 .image-box img {
-  width: 300px; /* <-- Picit kisebbre vettük (korábban 350px volt) */
+  width: 300px;
   height: auto;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
+  border-radius: 4.75% / 3.5%; /* Eredeti kártyaarányú kerekítés */
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
 }
 
-/* Egy kis bónusz: ha fölé viszed az egeret, picit kiemelkedik */
 .image-box img:hover {
   transform: scale(1.03);
 }
@@ -52,8 +53,9 @@
 }
 
 .info-box h1 {
-  font-size: 2.5rem;
-  margin: 0 0 0.5rem 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  margin: 0;
   color: #2c3e50;
 }
 
@@ -65,14 +67,16 @@
 }
 
 .oracle-text {
-  background: #f8f9fa;
+  background: #ffffff;
   padding: 1.5rem;
-  border-radius: 8px;
-  border-left: 5px solid #dd0031;
+  border-radius: 12px;
+  border-left: 5px solid #e74c3c;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 2rem;
-  white-space: pre-wrap; /* Hogy a bekezdések megmaradjanak a szabályszövegben */
+  color: #334155;
+  white-space: pre-wrap;
 }
 
 .price-tag {
@@ -82,16 +86,100 @@
   color: white;
   padding: 1rem 2rem;
   border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .price-label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   opacity: 0.8;
+  margin-bottom: 0.2rem;
 }
 
 .price-value {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: bold;
+}
+
+/* Kétoldalú kártya választó stílusok */
+.clickable-face {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.clickable-face.selected {
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+  z-index: 2;
+}
+
+/* --- RESZPONZÍV JAVÍTÁSOK (Mobil és Tablet) --- */
+
+@media (max-width: 992px) {
+  .content-split {
+    gap: 2rem;
+  }
+
+  .image-box img {
+    width: 250px; /* Tablet méret */
+  }
+}
+
+@media (max-width: 768px) {
+  .details-container {
+    padding: 0 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .content-split {
+    flex-direction: column; /* Egymás alá rakjuk a képet és a szöveget */
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .image-box {
+    width: 100%;
+    justify-content: center; /* Középre a képeket */
+    flex-wrap: wrap; /* Ha két kép van, és nem férnek el, törjenek meg */
+  }
+
+  .image-box img {
+    width: 100%;
+    max-width: 320px; /* Ne legyen túl nagy telefonon */
+  }
+
+  .info-box {
+    width: 100%;
+  }
+
+  /* A HTML-ben lévő inline flex fejlécet (Név + Mana) mobilon igazítjuk */
+  .info-box div[style*="display: flex"] {
+    flex-direction: column !important; /* A név és a mana egymás alá kerül */
+    align-items: flex-start !important;
+    gap: 0.5rem;
+  }
+
+  .info-box h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .type {
+    margin-bottom: 1.5rem;
+  }
+
+  .price-tag {
+    width: 100%; /* Mobilon legyen teljes szélességű a gomb */
+    box-sizing: border-box;
+    align-items: center;
+  }
+
+  .back-btn {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1.5rem;
+  }
 }
 
 .loading {
@@ -99,26 +187,4 @@
   font-size: 1.5rem;
   margin-top: 5rem;
   color: #7f8c8d;
-}
-.clickable-face {
-  cursor: pointer;
-  opacity: 0.5; /* A nem kiválasztott kártya halványabb */
-  transition: all 0.3s ease;
-}
-
-.clickable-face:hover {
-  opacity: 0.8;
-}
-
-/* Ez a stílus aktiválódik arra a képre, amelyikre rákattintottak */
-.clickable-face.selected {
-  opacity: 1; /* Teljes fényerő */
-  transform: scale(1.05) translateY(-5px); /* Picit kiemelkedik */
-  box-shadow: 0 15px 30px rgba(44, 62, 80, 0.4); /* Erősebb árnyékot kap */
-  z-index: 10;
-}
-.clickable-face:focus-visible {
-  outline: 4px solid #dd0031; /* Szép Angular-piros keret */
-  outline-offset: 4px; /* Kicsit kijjebb toljuk a képtől */
-  border-radius: 15px; /* Hogy kövesse a kártya sarkának ívét */
 }

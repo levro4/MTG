@@ -1,12 +1,24 @@
 <nav class="navbar">
-  <div class="nav-left">
-    <a routerLink="/" class="logo">MTG App</a>
-    <a routerLink="/" class="nav-link">Kezdőlap</a>
-    <a routerLink="/search" class="nav-link">Kártyakereső</a>
-  </div>
+  <a routerLink="/" class="logo" [class.menu-active]="isMenuOpen">MTG App</a>
 
-  <div class="nav-right">
-    <a routerLink="/login" class="nav-link login-link">Bejelentkezés</a>
-    <a routerLink="/register" class="btn-register">Regisztráció</a>
+  <button class="hamburger" (click)="toggleMenu()" [class.active]="isMenuOpen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="nav-links" [class.open]="isMenuOpen">
+
+    <div class="nav-left-group">
+      <a routerLink="/" class="nav-link" (click)="closeMenu()">Kezdőlap</a>
+      <a routerLink="/search" class="nav-link" (click)="closeMenu()">Kártyakereső</a>
+      <a routerLink="/deck-builder" class="nav-link" (click)="closeMenu()">Pakliépítő</a>
+    </div>
+
+    <div class="nav-right-group">
+      <a routerLink="/login" class="nav-link login-link" (click)="closeMenu()">Bejelentkezés</a>
+      <a routerLink="/register" class="btn-register" (click)="closeMenu()">Regisztráció</a>
+    </div>
+
   </div>
 </nav>

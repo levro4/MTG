@@ -13,11 +13,7 @@
       <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="searchCards()" placeholder="Keress kártyát a paklidhoz...">
       <div class="color-filters">
         @for (color of ['W', 'U', 'B', 'R', 'G', 'C']; track color) {
-          <button
-            (click)="toggleColor(color)"
-            [class.active]="selectedColors.includes(color)"
-            class="color-btn"
-            [title]="color">
+          <button (click)="toggleColor(color)" [class.active]="selectedColors.includes(color)" class="color-btn" [title]="color">
             <img [src]="'https://svgs.scryfall.io/card-symbols/' + color + '.svg'" [alt]="color">
           </button>
         }
@@ -63,14 +59,18 @@
           <tbody>
             @for (card of deckCards; track card.id; let i = $index) {
               <tr>
-                <td>{{ card.name }}</td>
+                <td>
+                  <a [routerLink]="['/card', card.id]"
+                     class="card-link"
+                     (mouseenter)="onMouseEnterCard(card.image)"
+                     (mouseleave)="onMouseLeaveCard()">
+                    {{ card.name }}
+                  </a>
+                </td>
                 <td>
                   <div class="mana-symbols-row">
                     @for (symbol of parseMana(card.mana_cost); track $index) {
-                      <img
-                        [src]="'https://svgs.scryfall.io/card-symbols/' + symbol + '.svg'"
-                        class="mana-icon-small"
-                        [alt]="symbol">
+                      <img [src]="'https://svgs.scryfall.io/card-symbols/' + symbol + '.svg'" class="mana-icon-small" [alt]="symbol">
                     }
                   </div>
                 </td>
@@ -90,10 +90,16 @@
       <h3>Hogyan építs paklit?</h3>
       <ul>
         <li>Egy pakli minimum <strong>60 kártyából</strong> álljon.</li>
-        <li>Ugyanabból a lapból maximum <strong>4 darab</strong> lehet (kivéve alap földek).</li>
+        <li>Ugyanabból a lapból maximum <strong>4 darab</strong> lehet.</li>
         <li>Törekedj a jó "Mana Curve"-re.</li>
       </ul>
     </div>
   </div>
+
+  @if (hoveredCardImage) {
+    <div class="card-preview-tooltip" [style.left.px]="tooltipX" [style.top.px]="tooltipY">
+      <img [src]="hoveredCardImage" alt="Kártya előnézet">
+    </div>
+  }
 
 </div>

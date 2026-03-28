@@ -142,3 +142,23 @@
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
 }
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.2rem; /* Kisebb betűk mobilon */
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  /* A kártyákat picit összébb húzzuk és lekicsinyítjük */
+  .fan-card {
+    width: 150px;
+  }
+
+  .card-0 { transform: translateX(-120px) translateY(30px) rotate(-10deg); }
+  .card-1 { transform: translateX(-60px) translateY(10px) rotate(-5deg); }
+  .card-2 { transform: translateX(0) translateY(0) rotate(0deg); }
+  .card-3 { transform: translateX(60px) translateY(10px) rotate(5deg); }
+  .card-4 { transform: translateX(120px) translateY(30px) rotate(10deg); }
+}
